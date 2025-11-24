@@ -282,7 +282,7 @@
 	
 	function formatRescheduleDate(dateStr) {
       if (!dateStr) return "";
-	  dateStr = dateStr + "T00:00:00Z";
+	  dateStr = dateStr + "T00:00:00";
 	  const dateObject = new Date(dateStr);
 	  const options = {
 		weekday: 'short', // 'ddd' - short day name (e.g., Mon)
@@ -290,7 +290,7 @@
 		day: '2-digit'    // 'dd'  - two-digit day (e.g., 24)
 	  };
 
-	return dateObject.toLocaleDateString('en-US', options);
+	return dateObject.toLocaleDateString('en-US', options).replace(/, /g, "");
 	}
 	
 
