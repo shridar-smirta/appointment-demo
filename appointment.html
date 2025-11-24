@@ -282,13 +282,14 @@
 	
 	function formatRescheduleDate(dateStr) {
       if (!dateStr) return "";
+	  const dateObject = new Date(dateStr);
 	  const options = {
 		weekday: 'short', // 'ddd' - short day name (e.g., Mon)
 		month: 'short',   // 'mmm' - short month name (e.g., Nov)
 		day: '2-digit'    // 'dd'  - two-digit day (e.g., 24)
 	  };
 
-	return dateStr.toLocaleDateString('en-US', options);
+	return dateObject.toLocaleDateString('en-US', options);
 	}
 	
 
