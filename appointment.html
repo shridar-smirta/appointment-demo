@@ -279,6 +279,33 @@
       const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
       return `${days[dt.getDay()]} ${m}/${String(d).padStart(2,'0')}/`;
     }
+	
+	function formatRescheduleDate(dateStr) {
+      if (!dateStr) return "";
+	  const options = {
+		weekday: 'short', // 'ddd' - short day name (e.g., Mon)
+		month: 'short',   // 'mmm' - short month name (e.g., Nov)
+		day: '2-digit'    // 'dd'  - two-digit day (e.g., 24)
+	  };
+
+	return dateStr.toLocaleDateString('en-US', options);
+	}
+	
+
+	function format24HourTo12Hour(time24h) {
+	  // Create a dummy Date object with the given time.
+	  // We use a fixed date (e.g., January 1, 2000) as only the time component matters.
+	  const [hours, minutes] = time24h.split(':');
+	  const date = new Date(2000, 0, 1, hours, minutes);
+
+	  // Use toLocaleTimeString to format it to 12-hour with AM/PM
+	  // 'en-US' specifies the locale, and options define the desired format.
+	  return date.toLocaleTimeString('en-US', {
+		hour: 'numeric',
+		minute: '2-digit',
+		hour12: true // Ensures 12-hour format with AM/PM
+	  });
+	}
 
     // schedulerDate is ALWAYS from the original UI date (appt.date)
     function saveToInputJSON(appt, newDate = null) {
@@ -287,10 +314,10 @@
         email: "abcdefgh@xyz.com",
         password: "1234567898",
         location: appt.location_name,
-        patientId: appt.mrn,
-        appointmentTime: appt.time,
+        patientId: appt.mrn,                
+        appointmentTime: format24HourTo12Hour(appt.time),
         schedulerDate: formatSchedulerDate(appt.date),
-        rescheduleDate: newDate || appt.date,
+        rescheduleDate: formatRescheduleDate(newDate) || formatRescheduleDate(appt.date),
         lastName: appt.lastName || appt.last,
         firstName: appt.firstName || appt.first,
         action: appt.action   
