@@ -282,7 +282,8 @@
 	
 	function formatRescheduleDate(dateStr) {
       if (!dateStr) return "";
-	  const dateObject = new Date(dateStr+"T00:00:00Z");
+	  dateStr = dateStr + "T00:00:00Z";
+	  const dateObject = new Date(dateStr);
 	  const options = {
 		weekday: 'short', // 'ddd' - short day name (e.g., Mon)
 		month: 'short',   // 'mmm' - short month name (e.g., Nov)
